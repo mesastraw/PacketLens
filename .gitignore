@@ -1,0 +1,22 @@
+### C Stuff ###
+
+# Object file
+*.o
+
+# Executables
+*.exe
+*.out
+
+### Go stuff ###
+
+# binaries
+*.exe
+
+
+### Other ###
+
+# Clang format file
+code/c/.clang-format
+
+# binary directory
+bin/
