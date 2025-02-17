@@ -1,23 +1,8 @@
-### C Stuff ###
-
 # Object file
-*.o
-
-# Executables
-*.exe
-*.out
-
-### Go stuff ###
-
-# binaries
-*.exe
-
-
-### Other ###
+./**/*.o
 
 # Clang format file
 code/c/.clang-format
-code/gioview
 
 # binary directory
 bin/
