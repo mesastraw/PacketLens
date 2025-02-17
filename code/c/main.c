@@ -58,7 +58,7 @@ int main() {
   }
 
   // Time to get sniffn
-  pcap_loop(handler, 25, myCallback, (u_char *)&clientSocket);
+  pcap_loop(handler, -1, myCallback, (u_char *)&clientSocket);
 
   // Cleanup
   shutdown(clientSocket, 2);

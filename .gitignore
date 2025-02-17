@@ -17,6 +17,7 @@
 
 # Clang format file
 code/c/.clang-format
+code/gioview
 
 # binary directory
 bin/

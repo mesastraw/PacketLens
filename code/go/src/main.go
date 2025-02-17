@@ -1,35 +1,80 @@
 package main
 
 import (
-	"fmt"
-	"io"
 	"log"
-	"net"
+	"time"
 
-	"github.com/google/gopacket"
-	_ "github.com/google/gopacket"
-	"github.com/google/gopacket/layers"
+	ui "github.com/gizak/termui/v3"
+	"github.com/gizak/termui/v3/widgets"
+	"github.com/mesastraw/PacketLens/internal/network"
 )
 
 func main() {
-	conn, err := net.Dial("unix", "/tmp/packetlens.sock")
-	if err != nil {
-		log.Fatal(err)
+	packet := new(network.Packet)
+
+	go packet.GetPackets()
+
+	if err := ui.Init(); err != nil {
+		log.Fatalf("failed to initialize termui: %v", err)
 	}
-	defer conn.Close()
+	defer ui.Close()
+
+	headerRow := [][]string{
+		{"No. ", "Time", "Source", "Destination", "Protocol", "Length"},
+	}
+
+	dataRow := [][]string{}
+
+	table := widgets.NewTable()
+	table.Rows = headerRow
+
+	table.TextStyle = ui.NewStyle(ui.ColorWhite)
+	termWidth, termHeight := ui.TerminalDimensions()
+	table.SetRect(0, 0, termWidth, termHeight)
+
+	grid := ui.NewGrid()
+	grid.SetRect(0, 0, termWidth, termHeight)
+	grid.Set(
+		ui.NewRow(1.0, table),
+	)
+
+	ui.Render(grid)
+	uiEvents := ui.PollEvents()
+	ticker := time.NewTicker(time.Second).C
+
+	scroll := 1
+	maxRows := 13
 
 	for {
-		buf := make([]byte, 65536)
-		n, err := conn.Read(buf)
-		if err != nil {
-			if err == io.EOF {
-				fmt.Println("ENd of file")
+		select {
+		case e := <-uiEvents:
+			switch e.ID {
+			case "q", "<C-c>":
 				return
+			case "<MouseWheelUp>":
+				if scroll > 0 {
+					scroll--
+
+				}
+			case "<MouseWheelDown>":
+				if scroll < len(dataRow)-maxRows {
+					scroll++
+				}
 			}
-			panic(err)
+
+		case <-ticker:
+			dataRow = append(dataRow, packet.ConvRow())
+
+			visStart := scroll
+			visEnd := scroll + maxRows
+
+			if visEnd > len(dataRow) {
+				visEnd = len(dataRow)
+			}
+
+			table.Rows = append(headerRow, dataRow[visStart:visEnd]...)
+			ui.Render(grid)
 		}
 
-		packet := gopacket.NewPacket(buf[:n], layers.LayerTypeEthernet, gopacket.Default)
-		fmt.Println("Got packet: ", packet)
 	}
 }
