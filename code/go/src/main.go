@@ -43,7 +43,7 @@ func main() {
 	ticker := time.NewTicker(time.Second).C
 
 	scroll := 1
-	maxRows := 13
+	maxRows := termHeight
 
 	for {
 		select {
@@ -72,6 +72,8 @@ func main() {
 				visEnd = len(dataRow)
 			}
 
+			termWidth, termHeight = ui.TerminalDimensions()
+			grid.SetRect(0, 0, termWidth, termHeight)
 			table.Rows = append(headerRow, dataRow[visStart:visEnd]...)
 			ui.Render(grid)
 		}

@@ -1,6 +1,6 @@
 /*  The purpose of this c program is to capture packets from an interface
  *  Then send these packets to the go program
- *  Add only one instance using flock
+ *  using a unix socket
  */
 
 #include <pcap.h>
@@ -11,9 +11,6 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <sys/un.h>
-
-// This is my callback function passed to pcap_loop and is called each time a
-// packet is recieved and it will send packets to the go program
 
 void myCallback(u_char *Socket, const struct pcap_pkthdr *header, const u_char *packet);
 void setupPcap(pcap_t **handler);
