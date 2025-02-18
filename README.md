@@ -4,7 +4,7 @@
 
 Simple packet catcher that displays basic information about the packets caught.
 The server that catches the packets is written in c.
-The client is written in go and displays a information about the packets in the terminal
+The client is written in go and displays the information about the packets in the terminal.
 
 ## Installation
 
