@@ -42,7 +42,7 @@ func main() {
 	uiEvents := ui.PollEvents()
 	ticker := time.NewTicker(time.Second).C
 
-	scroll := 1
+	scroll := 0
 	maxRows := termHeight
 
 	for {
