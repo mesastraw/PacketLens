@@ -25,6 +25,7 @@ run packetCather first with sudo:
 sudo ./bin/packetCatcher
 ```
 
+IMPORTAT!!!: packetCatcher needs to be run before client or the unix socket wont be created
 Then run client in a seperate terminal with sudo aswell:
 ```
 sudo ./bin/client
