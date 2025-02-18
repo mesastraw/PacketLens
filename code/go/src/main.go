@@ -42,7 +42,7 @@ func main() {
 	uiEvents := ui.PollEvents()
 	ticker := time.NewTicker(time.Second).C
 
-	scroll := 1
+	scroll := 0
 	maxRows := termHeight
 
 	for {
@@ -50,6 +50,7 @@ func main() {
 		case e := <-uiEvents:
 			switch e.ID {
 			case "q", "<C-c>":
+				network.Quit = true
 				return
 			case "<MouseWheelUp>":
 				if scroll > 0 {

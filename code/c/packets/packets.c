@@ -52,21 +52,4 @@ void setupPcap(pcap_t **handler) {
   }
 }
 
-void myCallback(u_char *clSocket, const struct pcap_pkthdr *header, const u_char *packet) {
-  if (packet == NULL) {
-    fprintf(stderr, "Error: NULL PACKET!");
-    return;
-  }
-  if (clSocket == NULL) {
-    fprintf(stderr, "Error socket is null");
-    return;
-  }
 
-  int clientSocket = *(int *)clSocket;
-
-  int bytesSent = send(clientSocket, packet, header->len, 0);
-  if (bytesSent == -1) {
-    perror("Sent Failed");
-    return;
-  }
-}

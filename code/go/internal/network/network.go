@@ -24,6 +24,7 @@ type Packet struct {
 var (
 	counter  int = 0
 	metaData gopacket.PacketMetadata
+	Quit     bool = false
 )
 
 func (p *Packet) GetPackets() {
@@ -43,6 +44,11 @@ func (p *Packet) GetPackets() {
 					return
 				}
 				panic(err)
+			}
+
+			if Quit == true {
+				conn.Write([]byte("quit"))
+				return
 			}
 
 			ethPacket := gopacket.NewPacket(buf[:n], layers.LayerTypeEthernet, gopacket.Default)

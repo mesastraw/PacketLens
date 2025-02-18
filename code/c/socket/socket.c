@@ -1,5 +1,6 @@
 #include "socket.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -14,6 +15,11 @@ int getClient() {
   serverAddr.sun_family = AF_UNIX;
   strcpy(serverAddr.sun_path, "/tmp/packetlens.sock");
   int serverLen = sizeof(serverAddr);
+
+  if (unlink("/tmp/packetlens.sock")) {
+    perror("Error unlink");
+    exit(EXIT_FAILURE);
+  }
 
   if (bind(serverSocket, (struct sockaddr *)&serverAddr, serverLen) == -1) {
     perror("Error binding to socket: ");
