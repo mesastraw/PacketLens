@@ -32,4 +32,4 @@ sudo ./bin/client
 
 To quit press q
 
-give the table some time to fill and then you can scroll up and down the table using scroll wheel up and down
+give the table some time to fill and then you can scroll up and down the table using scroll wheel
