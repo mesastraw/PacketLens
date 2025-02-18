@@ -16,7 +16,7 @@ int getClient() {
   strcpy(serverAddr.sun_path, "/tmp/packetlens.sock");
   int serverLen = sizeof(serverAddr);
 
-  if (unlink("/tmp/packetlens.sock")) {
+  if (unlink("/tmp/packetlens.sock") == -1) {
     perror("Error unlink");
     exit(EXIT_FAILURE);
   }

@@ -4,8 +4,6 @@
 # It will then store the binarys in their own bin dir
 # Also allows for easy cleaning of bin dir and binarys
 
-# Dont know why i put this here 
-# Too lazy to change it if it aint broke dont fix it
 root=$PWD
 
 buildC () {
