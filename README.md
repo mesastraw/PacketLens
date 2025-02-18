@@ -1,6 +1,7 @@
 # PacketLens
 
 ## Purpose
+This was written as a project to showcase for the Nokia highschool summer internship. 
 
 Simple packet catcher that displays basic information about the packets caught.
 The server that catches the packets is written in c.
